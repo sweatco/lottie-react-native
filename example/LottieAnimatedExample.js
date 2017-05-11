@@ -1,6 +1,7 @@
 /* eslint-disable global-require */
 import React from 'react';
 import {
+  Text,
   View,
   Animated,
   Easing,
@@ -33,6 +34,7 @@ export default class LottieAnimatedExample extends React.Component {
     this.state = {
       example: Object.keys(EXAMPLES)[0],
       progress: new Animated.Value(0),
+      finished: false,
       config: {
         duration: 3000,
         imperative: false,
@@ -64,6 +66,7 @@ export default class LottieAnimatedExample extends React.Component {
   }
 
   onResetPress() {
+    this.resetFinished();
     if (this.state.config.imperative) {
       this.anim.reset();
     } else {
@@ -78,11 +81,34 @@ export default class LottieAnimatedExample extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.example !== prevState.example) {
+      this.resetFinished();
+    }
+  }
+
+  resetFinished() {
+    this.setState({
+      finished: false,
+    });
+  }
+
   setAnim(anim) {
     this.anim = anim;
   }
 
   render() {
+    const finishedText = this.state.finished ? (
+      <Text
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+        }}
+      >
+          Finished!
+      </Text>
+    ) : undefined;
     const playerWindow = (
       <View
         style={{
@@ -95,6 +121,7 @@ export default class LottieAnimatedExample extends React.Component {
           marginVertical: 10,
         }}
       >
+        {finishedText}
         <View>
           <Animation
             ref={this.setAnim}
@@ -104,6 +131,11 @@ export default class LottieAnimatedExample extends React.Component {
             }}
             source={EXAMPLES[this.state.example].getJson()}
             progress={this.state.progress}
+            onFinish={() => {
+              this.setState({
+                finished: true,
+              });
+            }}
           />
         </View>
       </View>
