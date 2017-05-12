@@ -7,8 +7,8 @@
 |**`speed`**| The speed the animation will progress. This only affects the imperative API. |`1`|
 |**`loop`**|A boolean flag indicating whether or not the animation should loop. |`false`|
 |**`style`**|Style attributes for the view, as expected in a standard [`View`](http://facebook.github.io/react-native/releases/0.46/docs/layout-props.html), aside from border styling |*None*|
+|**`onFinish`**|A callback that is fired once animation is finished playing. Only relevant in case if imperative `.play()` was used to start the animation. |*None*|
 |**`imageAssetsFolder`**| Needed for **Android** to work properly with assets, iOS will ignore it. |*None*|
-
 
 ## Methods (Imperative API):
 
