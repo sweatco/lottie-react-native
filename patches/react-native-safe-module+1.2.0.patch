@@ -1,0 +1,535 @@
+diff --git a/node_modules/react-native-safe-module/lib/EventEmitter.js b/node_modules/react-native-safe-module/lib/EventEmitter.js
+index 5acc804..410724e 100644
+--- a/node_modules/react-native-safe-module/lib/EventEmitter.js
++++ b/node_modules/react-native-safe-module/lib/EventEmitter.js
+@@ -1,55 +1 @@
+-Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}// A basic, minimalist EventEmitter
+-
+-// Subscription { remove() {} }
+-var
+-EventEmitter=function(){
+-function EventEmitter(){_classCallCheck(this,EventEmitter);
+-this.registry={};
+-}_createClass(EventEmitter,[{key:"addListener",value:function addListener(
+-
+-eventType,listener){var _this=this;
+-if(!this.registry[eventType]){
+-this.registry[eventType]=[];
+-}
+-this.registry[eventType].push(listener);
+-return{remove:function remove(){return _this.removeListener(eventType,listener);}};
+-}},{key:"once",value:function once(
+-
+-eventType,listener,context){
+-var h=function h(){for(var _len=arguments.length,args=Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}
+-result.remove();
+-listener.apply(context,args);
+-};
+-var result=this.addListener(eventType,h);
+-return result;
+-}},{key:"removeAllListeners",value:function removeAllListeners(
+-
+-eventType){
+-this.registry[eventType]=[];
+-}
+-
+-// eslint-disable-next-line class-methods-use-this
+-},{key:"removeSubscription",value:function removeSubscription(subscription){
+-subscription.remove();
+-}},{key:"listeners",value:function listeners(
+-
+-eventType){
+-return this.registry[eventType];
+-}},{key:"emit",value:function emit(
+-
+-eventType){for(var _len2=arguments.length,args=Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){args[_key2-1]=arguments[_key2];}
+-var events=this.registry[eventType];
+-if(!events)return;
+-events.forEach(function(handler){return handler.apply(undefined,args);});
+-}},{key:"removeListener",value:function removeListener(
+-
+-eventType,listener){
+-var events=this.registry[eventType];
+-if(!events)return;
+-var index=events.indexOf(listener);
+-if(index===-1)return;
+-events.splice(index,1);
+-if(events.length===0){
+-delete this.registry[eventType];
+-}
+-}}]);return EventEmitter;}();exports.default=EventEmitter;
+\ No newline at end of file
++Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}var EventEmitter=function(){function EventEmitter(){_classCallCheck(this,EventEmitter);this.registry={};}_createClass(EventEmitter,[{key:"addListener",value:function addListener(eventType,listener){var _this=this;if(!this.registry[eventType]){this.registry[eventType]=[];}this.registry[eventType].push(listener);return{remove:function remove(){return _this.removeListener(eventType,listener);}};}},{key:"once",value:function once(eventType,listener,context){var h=function h(){for(var _len=arguments.length,args=Array(_len),_key=0;_key<_len;_key++){args[_key]=arguments[_key];}result.remove();listener.apply(context,args);};var result=this.addListener(eventType,h);return result;}},{key:"removeAllListeners",value:function removeAllListeners(eventType){this.registry[eventType]=[];}},{key:"removeSubscription",value:function removeSubscription(subscription){subscription.remove();}},{key:"listeners",value:function listeners(eventType){return this.registry[eventType];}},{key:"emit",value:function emit(eventType){for(var _len2=arguments.length,args=Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){args[_key2-1]=arguments[_key2];}var events=this.registry[eventType];if(!events)return;events.forEach(function(handler){return handler.apply(undefined,args);});}},{key:"removeListener",value:function removeListener(eventType,listener){var events=this.registry[eventType];if(!events)return;var index=events.indexOf(listener);if(index===-1)return;events.splice(index,1);if(events.length===0){delete this.registry[eventType];}}}]);return EventEmitter;}();exports.default=EventEmitter;
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/lib/NativeSafeComponent.js b/node_modules/react-native-safe-module/lib/NativeSafeComponent.js
+index 873f46a..3d1cf63 100644
+--- a/node_modules/react-native-safe-module/lib/NativeSafeComponent.js
++++ b/node_modules/react-native-safe-module/lib/NativeSafeComponent.js
+@@ -1,160 +1 @@
+-var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.create(...) was invoked without any options parameter.\n    '],['\n      SafeModule.create(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n             When attempting to resolve the native component ',',\n             componentOverrides.',' is expected to be a function, but found\n             ',' instead.\n          '],['\n             When attempting to resolve the native component ',',\n             componentOverrides.',' is expected to be a function, but found\n             ',' instead.\n          ']),_templateObject3=_taggedTemplateLiteral(['\n            When attempting to resolve the native component ',',\n            componentOverrides.',' is expected to be a function that returns a React\n            component. Instead, ',' was found.\n          '],['\n            When attempting to resolve the native component ',',\n            componentOverrides.',' is expected to be a function that returns a React\n            component. Instead, ',' was found.\n          ']);var _reactNative=require('react-native');
+-
+-
+-
+-
+-
+-var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);
+-var _SafeModule=require('./SafeModule');var _SafeModule2=_interopRequireDefault(_SafeModule);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}
+-
+-var first=function first(array,fn){
+-var result=void 0;
+-var i=0;
+-/* eslint no-plusplus: 0 */
+-for(;i<array.length;i++){
+-result=fn(array[i]);
+-if(result)return result;
+-}
+-return null;
+-};
+-
+-var moduleWithName=function moduleWithName(nameOrArray){
+-if(!nameOrArray)return null;
+-if(Array.isArray(nameOrArray))return first(nameOrArray,moduleWithName);
+-return _reactNative.UIManager[nameOrArray];
+-};
+-
+-var findFirstResolver=function findFirstResolver(namespace){return function findFirstOnNamespace(nameOrArray){
+-if(!nameOrArray)return null;
+-if(Array.isArray(nameOrArray))return first(nameOrArray,findFirstOnNamespace);
+-return nameOrArray in namespace?nameOrArray:null;
+-};};
+-
+-var findFirstViewName=findFirstResolver(_reactNative.UIManager);
+-
+-var getPrimaryName=function getPrimaryName(nameOrArray){
+-return Array.isArray(nameOrArray)?getPrimaryName(nameOrArray[0]):nameOrArray;
+-};
+-
+-var defaultGetVersion=function defaultGetVersion(module){return module.VERSION;};
+-
+-function SafeComponentCreate(options){
+-if(!options){
+-throw new Error((0,_dedent2.default)(_templateObject));
+-
+-
+-}var
+-
+-viewName=
+-
+-
+-
+-
+-options.viewName;var propOverrides=options.propOverrides;var componentOverrides=options.componentOverrides;var mockComponent=options.mockComponent;var mock=options.mock;var
+-
+-getVersion=
+-options.getVersion;
+-
+-if(!getVersion){
+-getVersion=defaultGetVersion;
+-}
+-
+-if(!viewName){
+-throw new Error('\n      SafeModule.component(...) requires a viewName property to be specified.\n    ');
+-
+-
+-}
+-
+-if(!mockComponent){
+-throw new Error('\n      SafeModule.component(...) requires a mockComponent property to be specified.\n    ');
+-
+-
+-}
+-
+-var PRIMARY_VIEW_NAME=getPrimaryName(viewName);
+-
+-var realViewName=findFirstViewName(viewName);
+-var realViewConfig=_reactNative.UIManager[realViewName];
+-
+-if(!realViewName||!realViewConfig){
+-return mockComponent;
+-}
+-
+-var moduleOptions=_extends({},options,{
+-mock:mock||{},
+-moduleName:realViewName+'Manager'});
+-
+-
+-var nativeModule=(0,_SafeModule2.default)(moduleOptions);
+-
+-var version=getVersion(realViewConfig.Constants||{});
+-
+-if(propOverrides){
+-var overrides=propOverrides[version];
+-var boundOverrides={};
+-if(overrides){
+-if(typeof overrides==='function'){
+-boundOverrides=overrides(realViewConfig.NativeProps,realViewConfig,nativeModule);
+-}else{
+-boundOverrides=_extends({},overrides);
+-}
+-}
+-_extends(realViewConfig.NativeProps,boundOverrides);
+-}
+-
+-var nativeComponent=(0,_reactNative.requireNativeComponent)(realViewName);
+-
+-var result=nativeComponent;
+-
+-result.runCommand=function(instance,name){for(var _len=arguments.length,args=Array(_len>2?_len-2:0),_key=2;_key<_len;_key++){args[_key-2]=arguments[_key];}
+-return _reactNative.Platform.select({
+-android:function android(){return _reactNative.UIManager.dispatchViewManagerCommand(
+-(0,_reactNative.findNodeHandle)(instance),
+-_reactNative.UIManager[realViewName].Commands[name],
+-args);},
+-
+-ios:function ios(){return nativeModule[name].apply(nativeModule,[(0,_reactNative.findNodeHandle)(instance)].concat(args));},
+-default:function _default(){}})();
+-
+-};
+-
+-result.updateView=function(instance,props){
+-var native=function native(){return _reactNative.UIManager.updateView((0,_reactNative.findNodeHandle)(instance),realViewName,props);};
+-_reactNative.Platform.select({
+-ios:native,
+-android:native,
+-default:function _default(){}})();
+-
+-};
+-
+-if(componentOverrides){
+-var _overrides=componentOverrides[version];
+-if(_overrides){
+-if(__DEV__){
+-if(typeof _overrides!=='function'){
+-console.error((0,_dedent2.default)(_templateObject2,
+-PRIMARY_VIEW_NAME,
+-version,
+-typeof _overrides));
+-
+-}
+-}
+-
+-result=_overrides(nativeComponent,nativeModule);
+-
+-if(__DEV__){
+-if(typeof result!=='function'){
+-console.error((0,_dedent2.default)(_templateObject3,
+-PRIMARY_VIEW_NAME,
+-version,
+-typeof result));
+-
+-}
+-}
+-}
+-}
+-
+-return result;
+-}
+-
+-module.exports=SafeComponentCreate;
+\ No newline at end of file
++var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.create(...) was invoked without any options parameter.\n    '],['\n      SafeModule.create(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n             When attempting to resolve the native component ',',\n             componentOverrides.',' is expected to be a function, but found\n             ',' instead.\n          '],['\n             When attempting to resolve the native component ',',\n             componentOverrides.',' is expected to be a function, but found\n             ',' instead.\n          ']),_templateObject3=_taggedTemplateLiteral(['\n            When attempting to resolve the native component ',',\n            componentOverrides.',' is expected to be a function that returns a React\n            component. Instead, ',' was found.\n          '],['\n            When attempting to resolve the native component ',',\n            componentOverrides.',' is expected to be a function that returns a React\n            component. Instead, ',' was found.\n          ']);var _reactNative=require('react-native');var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);var _SafeModule=require('./SafeModule');var _SafeModule2=_interopRequireDefault(_SafeModule);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var first=function first(array,fn){var result=void 0;var i=0;for(;i<array.length;i++){result=fn(array[i]);if(result)return result;}return null;};var getViewManagerConfig=function getViewManagerConfig(moduleName){if(_reactNative.UIManager.getViewManagerConfig){return _reactNative.UIManager.getViewManagerConfig(moduleName);}return _reactNative.UIManager[moduleName];};var moduleWithName=function moduleWithName(nameOrArray){if(!nameOrArray)return null;if(Array.isArray(nameOrArray))return first(nameOrArray,moduleWithName);return getViewManagerConfig(nameOrArray);};var findFirstResolver=function findFirstResolver(namespace){return function findFirstOnNamespace(nameOrArray){if(!nameOrArray)return null;if(Array.isArray(nameOrArray))return first(nameOrArray,findFirstOnNamespace);return nameOrArray in namespace?nameOrArray:null;};};var findFirstViewName=findFirstResolver(_reactNative.UIManager);var getPrimaryName=function getPrimaryName(nameOrArray){return Array.isArray(nameOrArray)?getPrimaryName(nameOrArray[0]):nameOrArray;};var defaultGetVersion=function defaultGetVersion(module){return module.VERSION;};function SafeComponentCreate(options){if(!options){throw new Error((0,_dedent2.default)(_templateObject));}var viewName=options.viewName,propOverrides=options.propOverrides,componentOverrides=options.componentOverrides,mockComponent=options.mockComponent,mock=options.mock;var getVersion=options.getVersion;if(!getVersion){getVersion=defaultGetVersion;}if(!viewName){throw new Error('\n      SafeModule.component(...) requires a viewName property to be specified.\n    ');}if(!mockComponent){throw new Error('\n      SafeModule.component(...) requires a mockComponent property to be specified.\n    ');}var PRIMARY_VIEW_NAME=getPrimaryName(viewName);var realViewName=findFirstViewName(viewName);var realViewConfig=getViewManagerConfig(realViewName);if(!realViewName||!realViewConfig){return mockComponent;}var moduleOptions=_extends({},options,{mock:mock||{},moduleName:realViewName+'Manager'});var nativeModule=(0,_SafeModule2.default)(moduleOptions);var version=getVersion(realViewConfig.Constants||{});if(propOverrides){var overrides=propOverrides[version];var boundOverrides={};if(overrides){if(typeof overrides==='function'){boundOverrides=overrides(realViewConfig.NativeProps,realViewConfig,nativeModule);}else{boundOverrides=_extends({},overrides);}}_extends(realViewConfig.NativeProps,boundOverrides);}var nativeComponent=(0,_reactNative.requireNativeComponent)(realViewName);var result=nativeComponent;result.runCommand=function(instance,name){for(var _len=arguments.length,args=Array(_len>2?_len-2:0),_key=2;_key<_len;_key++){args[_key-2]=arguments[_key];}return _reactNative.Platform.select({android:function android(){return _reactNative.UIManager.dispatchViewManagerCommand((0,_reactNative.findNodeHandle)(instance),getViewManagerConfig(realViewName).Commands[name],args);},ios:function ios(){return nativeModule[name].apply(nativeModule,[(0,_reactNative.findNodeHandle)(instance)].concat(args));},default:function _default(){}})();};result.updateView=function(instance,props){var native=function native(){return _reactNative.UIManager.updateView((0,_reactNative.findNodeHandle)(instance),realViewName,props);};_reactNative.Platform.select({ios:native,android:native,default:function _default(){}})();};if(componentOverrides){var _overrides=componentOverrides[version];if(_overrides){if(__DEV__){if(typeof _overrides!=='function'){console.error((0,_dedent2.default)(_templateObject2,PRIMARY_VIEW_NAME,version,typeof _overrides));}}result=_overrides(nativeComponent,nativeModule);if(__DEV__){if(typeof result!=='function'){console.error((0,_dedent2.default)(_templateObject3,PRIMARY_VIEW_NAME,version,typeof result));}}}}return result;}module.exports=SafeComponentCreate;
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/lib/NativeSafeModule.js b/node_modules/react-native-safe-module/lib/NativeSafeModule.js
+index 6484675..758e1d9 100644
+--- a/node_modules/react-native-safe-module/lib/NativeSafeModule.js
++++ b/node_modules/react-native-safe-module/lib/NativeSafeModule.js
+@@ -1,155 +1 @@
+-var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.module(...) was invoked without any options parameter.\n    '],['\n      SafeModule.module(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    '],['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    ']),_templateObject3=_taggedTemplateLiteral(['\n      Missing a "mock" parameter.\n    '],['\n      Missing a "mock" parameter.\n    ']),_templateObject4=_taggedTemplateLiteral(['\n          ReactNative.NativeModules.','.',' did not have a corresponding prop defined\n          in the mock provided to SafeModule.\n        '],['\n          ReactNative.NativeModules.','.',' did not have a corresponding prop defined\n          in the mock provided to SafeModule.\n        ']);var _reactNative=require('react-native');
+-var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}
+-
+-// const AccountModule = SafeModule.create({
+-//   moduleName: ['SomeNativeModule', 'SomeOldNameOfThatModule'],
+-//   isEventEmitter: true,
+-//   getVersion: module => module.VERSION,
+-//   onInit: (module, version) => {},
+-//   onNoModuleFound: () => {},
+-//   onVersionFound: (version) => {},
+-//   onOverrideUsed: (version, overrideName) => {},
+-//   onOverrideCalled: (version, overrideName) => {},
+-//   mock: {
+-//     push: () => Promise.resolve(),
+-//     pushNative: () => Promise.resolve(),
+-//     setTitle: noop,
+-//   },
+-//   overrides: {
+-//     7: {
+-//       push: old => (id, props, options) => {
+-//         return old(id, props, !!options.animated);
+-//       },
+-//     },
+-//   },
+-// });
+-
+-var hasOwnProperty=Object.prototype.hasOwnProperty;
+-
+-var UNMOCKED_PROPERTY_WHITELIST={
+-VERSION:true,
+-addListener:true,
+-removeListeners:true};
+-
+-
+-var eventEmitterMock={
+-addListener:function addListener(){},
+-removeListeners:function removeListeners(){}};
+-
+-
+-var first=function first(array,fn){
+-var result=void 0;
+-var i=0;
+-/* eslint no-plusplus: 0 */
+-for(;i<array.length;i++){
+-result=fn(array[i]);
+-if(result)return result;
+-}
+-return null;
+-};
+-
+-var moduleWithName=function moduleWithName(nameOrArray){
+-if(!nameOrArray)return null;
+-if(Array.isArray(nameOrArray))return first(nameOrArray,moduleWithName);
+-return _reactNative.NativeModules[nameOrArray];
+-};
+-
+-var getPrimaryName=function getPrimaryName(nameOrArray){
+-return Array.isArray(nameOrArray)?getPrimaryName(nameOrArray[0]):nameOrArray;
+-};
+-
+-var getModule=function getModule(moduleNameOrNames,mock,isEventEmitter){
+-var module=moduleWithName(moduleNameOrNames);
+-// TODO: in __DEV__, we should console.warn if anything but the first module got used.
+-if(module)return module;
+-// For Platform.OS === 'ios', we must ensure that `module` contains event
+-// emitter methods expected by `NativeEventEmitter`, even in the case of a
+-// mock. Otherwise, calling the emitter will throw an error.
+-if(isEventEmitter)return _extends({},mock,eventEmitterMock);
+-return mock;
+-};
+-
+-var defaultGetVersion=function defaultGetVersion(module){return module.VERSION;};
+-
+-
+-var create=function SafeModuleCreate(options){
+-if(!options){
+-throw new Error((0,_dedent2.default)(_templateObject));
+-
+-
+-}var
+-
+-moduleName=
+-
+-
+-
+-options.moduleName;var mock=options.mock;var isEventEmitter=options.isEventEmitter;var versionOverrides=options.versionOverrides;var
+-
+-getVersion=
+-options.getVersion;
+-
+-if(!getVersion){
+-getVersion=defaultGetVersion;
+-}
+-
+-if(!moduleName){
+-throw new Error((0,_dedent2.default)(_templateObject2));
+-
+-
+-}
+-var MODULE_NAME=getPrimaryName(moduleName);
+-
+-if(!mock){
+-throw new Error((0,_dedent2.default)(_templateObject3));
+-
+-
+-}
+-
+-var result={};
+-
+-var module=getModule(moduleName,mock,isEventEmitter);
+-var version=getVersion(module);
+-
+-if(__DEV__){
+-Object.keys(module).forEach(function(key){
+-if(!hasOwnProperty.call(mock,key)&&!UNMOCKED_PROPERTY_WHITELIST[key]){
+-console.warn((0,_dedent2.default)(_templateObject4,
+-MODULE_NAME,key));
+-
+-
+-}
+-});
+-}
+-
+-if(isEventEmitter){
+-// TODO(lmr): should this be put inside of a try/catch?
+-result.emitter=new _reactNative.NativeEventEmitter(module);
+-}
+-
+-var overrides=void 0;
+-var boundOverrides=void 0;
+-if(versionOverrides){
+-overrides=versionOverrides[version];
+-boundOverrides={};
+-if(overrides){
+-Object.keys(overrides).forEach(function(key){
+-if(typeof overrides[key]==='function'){
+-boundOverrides[key]=overrides[key](module[key],module);
+-}else{
+-boundOverrides[key]=overrides[key];
+-}
+-});
+-}
+-}
+-
+-_extends(
+-result,
+-mock,
+-module,
+-boundOverrides);
+-
+-
+-return result;
+-};
+-
+-module.exports=create;
+\ No newline at end of file
++var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.module(...) was invoked without any options parameter.\n    '],['\n      SafeModule.module(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    '],['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    ']),_templateObject3=_taggedTemplateLiteral(['\n      Missing a "mock" parameter.\n    '],['\n      Missing a "mock" parameter.\n    ']),_templateObject4=_taggedTemplateLiteral(['\n          ReactNative.NativeModules.','.',' did not have a corresponding prop defined\n          in the mock provided to SafeModule.\n        '],['\n          ReactNative.NativeModules.','.',' did not have a corresponding prop defined\n          in the mock provided to SafeModule.\n        ']);var _reactNative=require('react-native');var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var hasOwnProperty=Object.prototype.hasOwnProperty;var UNMOCKED_PROPERTY_WHITELIST={VERSION:true,addListener:true,removeListeners:true};var eventEmitterMock={addListener:function addListener(){},removeListeners:function removeListeners(){}};var first=function first(array,fn){var result=void 0;var i=0;for(;i<array.length;i++){result=fn(array[i]);if(result)return result;}return null;};var moduleWithName=function moduleWithName(nameOrArray){if(!nameOrArray)return null;if(Array.isArray(nameOrArray))return first(nameOrArray,moduleWithName);return _reactNative.NativeModules[nameOrArray];};var getPrimaryName=function getPrimaryName(nameOrArray){return Array.isArray(nameOrArray)?getPrimaryName(nameOrArray[0]):nameOrArray;};var getModule=function getModule(moduleNameOrNames,mock,isEventEmitter){var module=moduleWithName(moduleNameOrNames);if(module)return module;if(isEventEmitter)return _extends({},mock,eventEmitterMock);return mock;};var defaultGetVersion=function defaultGetVersion(module){return module.VERSION;};var create=function SafeModuleCreate(options){if(!options){throw new Error((0,_dedent2.default)(_templateObject));}var moduleName=options.moduleName,mock=options.mock,isEventEmitter=options.isEventEmitter,versionOverrides=options.versionOverrides;var getVersion=options.getVersion;if(!getVersion){getVersion=defaultGetVersion;}if(!moduleName){throw new Error((0,_dedent2.default)(_templateObject2));}var MODULE_NAME=getPrimaryName(moduleName);if(!mock){throw new Error((0,_dedent2.default)(_templateObject3));}var result={};var module=getModule(moduleName,mock,isEventEmitter);var version=getVersion(module);if(__DEV__){Object.keys(module).forEach(function(key){if(!hasOwnProperty.call(mock,key)&&!UNMOCKED_PROPERTY_WHITELIST[key]){console.warn((0,_dedent2.default)(_templateObject4,MODULE_NAME,key));}});}if(isEventEmitter){result.emitter=new _reactNative.NativeEventEmitter(module);}var overrides=void 0;var boundOverrides=void 0;if(versionOverrides){overrides=versionOverrides[version];boundOverrides={};if(overrides){Object.keys(overrides).forEach(function(key){if(typeof overrides[key]==='function'){boundOverrides[key]=overrides[key](module[key],module);}else{boundOverrides[key]=overrides[key];}});}}_extends(result,mock,module,boundOverrides);return result;};module.exports=create;
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/lib/SafeComponent.js b/node_modules/react-native-safe-module/lib/SafeComponent.js
+index e1ef926..29efbc2 100644
+--- a/node_modules/react-native-safe-module/lib/SafeComponent.js
++++ b/node_modules/react-native-safe-module/lib/SafeComponent.js
+@@ -1,28 +1 @@
+-var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.create(...) was invoked without any options parameter.\n    '],['\n      SafeModule.create(...) was invoked without any options parameter.\n    ']);var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}
+-
+-function SafeComponentCreate(options){
+-if(!options){
+-throw new Error((0,_dedent2.default)(_templateObject));
+-
+-
+-}var
+-
+-viewName=
+-
+-options.viewName;var mockComponent=options.mockComponent;
+-
+-if(!viewName){
+-throw new Error('\n      SafeModule.component(...) requires a viewName property to be specified.\n    ');
+-
+-
+-}
+-
+-if(!mockComponent){
+-throw new Error('\n      SafeModule.component(...) requires a mockComponent property to be specified.\n    ');
+-
+-
+-}
+-return mockComponent;
+-}
+-
+-module.exports=SafeComponentCreate;
+\ No newline at end of file
++var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.create(...) was invoked without any options parameter.\n    '],['\n      SafeModule.create(...) was invoked without any options parameter.\n    ']);var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}function SafeComponentCreate(options){if(!options){throw new Error((0,_dedent2.default)(_templateObject));}var viewName=options.viewName,mockComponent=options.mockComponent;if(!viewName){throw new Error('\n      SafeModule.component(...) requires a viewName property to be specified.\n    ');}if(!mockComponent){throw new Error('\n      SafeModule.component(...) requires a mockComponent property to be specified.\n    ');}return mockComponent;}module.exports=SafeComponentCreate;
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/lib/SafeModule.js b/node_modules/react-native-safe-module/lib/SafeModule.js
+index b6833bc..c042dad 100644
+--- a/node_modules/react-native-safe-module/lib/SafeModule.js
++++ b/node_modules/react-native-safe-module/lib/SafeModule.js
+@@ -1,40 +1 @@
+-var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.module(...) was invoked without any options parameter.\n    '],['\n      SafeModule.module(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    '],['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    ']),_templateObject3=_taggedTemplateLiteral(['\n      Missing a "mock" parameter.\n    '],['\n      Missing a "mock" parameter.\n    ']);var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);
+-var _EventEmitter=require('./EventEmitter');var _EventEmitter2=_interopRequireDefault(_EventEmitter);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}
+-
+-var create=function SafeModuleCreate(options){
+-if(!options){
+-throw new Error((0,_dedent2.default)(_templateObject));
+-
+-
+-}var
+-
+-moduleName=
+-
+-
+-options.moduleName;var mock=options.mock;var isEventEmitter=options.isEventEmitter;
+-
+-if(!moduleName){
+-throw new Error((0,_dedent2.default)(_templateObject2));
+-
+-
+-}
+-
+-if(!mock){
+-throw new Error((0,_dedent2.default)(_templateObject3));
+-
+-
+-}
+-
+-var result={};
+-
+-if(isEventEmitter){
+-// TODO(lmr): should this be put inside of a try/catch?
+-result.emitter=new _EventEmitter2.default();
+-}
+-
+-_extends(result,mock);
+-
+-return result;
+-};
+-
+-module.exports=create;
+\ No newline at end of file
++var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _templateObject=_taggedTemplateLiteral(['\n      SafeModule.module(...) was invoked without any options parameter.\n    '],['\n      SafeModule.module(...) was invoked without any options parameter.\n    ']),_templateObject2=_taggedTemplateLiteral(['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    '],['\n      SafeModule.module(...) requires a moduleName property to be specified.\n    ']),_templateObject3=_taggedTemplateLiteral(['\n      Missing a "mock" parameter.\n    '],['\n      Missing a "mock" parameter.\n    ']);var _dedent=require('dedent');var _dedent2=_interopRequireDefault(_dedent);var _EventEmitter=require('./EventEmitter');var _EventEmitter2=_interopRequireDefault(_EventEmitter);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _taggedTemplateLiteral(strings,raw){return Object.freeze(Object.defineProperties(strings,{raw:{value:Object.freeze(raw)}}));}var create=function SafeModuleCreate(options){if(!options){throw new Error((0,_dedent2.default)(_templateObject));}var moduleName=options.moduleName,mock=options.mock,isEventEmitter=options.isEventEmitter;if(!moduleName){throw new Error((0,_dedent2.default)(_templateObject2));}if(!mock){throw new Error((0,_dedent2.default)(_templateObject3));}var result={};if(isEventEmitter){result.emitter=new _EventEmitter2.default();}_extends(result,mock);return result;};module.exports=create;
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/lib/index.js b/node_modules/react-native-safe-module/lib/index.js
+index c4c3a3f..473270e 100644
+--- a/node_modules/react-native-safe-module/lib/index.js
++++ b/node_modules/react-native-safe-module/lib/index.js
+@@ -1,5 +1 @@
+-/* eslint global-require: 0 */
+-module.exports={
+-create:require('./SafeModule'),
+-module:require('./SafeModule'),
+-component:require('./SafeComponent')};
+\ No newline at end of file
++module.exports={create:require('./SafeModule'),module:require('./SafeModule'),component:require('./SafeComponent')};
+\ No newline at end of file
+diff --git a/node_modules/react-native-safe-module/src/NativeSafeComponent.js b/node_modules/react-native-safe-module/src/NativeSafeComponent.js
+index bb1db20..f3ff56e 100644
+--- a/node_modules/react-native-safe-module/src/NativeSafeComponent.js
++++ b/node_modules/react-native-safe-module/src/NativeSafeComponent.js
+@@ -18,10 +18,20 @@ const first = (array, fn) => {
+   return null;
+ };
+ 
++const getViewManagerConfig = (moduleName) => {
++  if (UIManager.getViewManagerConfig) {
++    // RN >= 0.58
++    return UIManager.getViewManagerConfig(moduleName)
++  }
++
++  // RN < 0.58
++  return UIManager[moduleName];
++};
++
+ const moduleWithName = (nameOrArray) => {
+   if (!nameOrArray) return null;
+   if (Array.isArray(nameOrArray)) return first(nameOrArray, moduleWithName);
+-  return UIManager[nameOrArray];
++  return getViewManagerConfig(nameOrArray);
+ };
+ 
+ const findFirstResolver = namespace => function findFirstOnNamespace(nameOrArray) {
+@@ -74,7 +84,7 @@ function SafeComponentCreate(options) {
+   const PRIMARY_VIEW_NAME = getPrimaryName(viewName);
+ 
+   const realViewName = findFirstViewName(viewName);
+-  const realViewConfig = UIManager[realViewName];
++  const realViewConfig = getViewManagerConfig(realViewName);
+ 
+   if (!realViewName || !realViewConfig) {
+     return mockComponent;
+@@ -110,7 +120,7 @@ function SafeComponentCreate(options) {
+     return Platform.select({
+       android: () => UIManager.dispatchViewManagerCommand(
+         findNodeHandle(instance),
+-        UIManager[realViewName].Commands[name],
++        getViewManagerConfig(realViewName).Commands[name],
+         args
+       ),
+       ios: () => nativeModule[name](findNodeHandle(instance), ...args),
