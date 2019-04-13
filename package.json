@@ -10,6 +10,7 @@
     "build": "babel src/js --out-dir lib",
     "watch": "babel src/js --out-dir lib --watch",
     "build:pods": "cd example/ios; bundle exec pod install; cd -",
+    "postinstall-build": "yarn patch-package",
     "run:packager": "node node_modules/react-native/local-cli/cli.js start",
     "run:ios": "react-native run-ios --project-path ./example/ios",
     "start:android": "adb shell am start -n com.example/.MainActivity",
@@ -70,7 +71,8 @@
     "eslint-config-prettier": "^2.8.0",
     "eslint-plugin-prettier": "^2.3.1",
     "prettier": "^1.8.2",
-    "prettier-eslint": "^8.2.2"
+    "prettier-eslint": "^8.2.2",
+    "patch-package": "^6.1.2"
   },
   "rnpm": {
     "android": {
